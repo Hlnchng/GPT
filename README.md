@@ -1,4 +1,4 @@
-# Minimal Generative Pre-trained Transformer Language Model Implemented from Scratch in Python
+# Minimal Generative Pre-trained Transformer (GPT) Language Model Implemented from Scratch in Python
 
 A educational reimplementation of Karpathy’s GPT.
 
