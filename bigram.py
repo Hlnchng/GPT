@@ -4,17 +4,17 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 # hyperparameters
-batch_size = 32 # how many independent sequences will we process in parallel?
-block_size = 8 # what is the maximum context length for predictions?
-max_iters = 3000
-eval_interval = 300
-learning_rate = 1e-3 # learning rate for the optimiser
+batch_size = 64 # how many independent sequences will we process in parallel?
+block_size = 256 # what is the maximum context length for predictions?
+max_iters = 5000
+eval_interval = 500
+learning_rate = 3e-4 # learning rate for the optimiser
 device = 'cuda' if torch.cuda.is_available() else 'cpu' # runs on GPU instead
 eval_iters = 200
-n_embd = 32 # size of the embedding vector for each token
-n_head = 
-n_layer = 
-dropout = 
+n_embd = 384 # size of the embedding vector for each token
+n_head = 6
+n_layer = 6
+dropout = 0.2 # dropout rate for regularisation
 # ------------
 
 script_dir = os.path.dirname(__file__)
@@ -143,7 +143,7 @@ class BigramLanguageModel(nn.Module):
         # each token directly reads off the logits for the next token from a lookup table
         self.token_embedding_table = nn.Embedding(vocab_size, n_embd) 
         self.position_embedding_table = nn.Embedding(block_size, n_embd) # block size will get it's own embedding vector
-        self.blocks = nn.Sequential(*[Block(n_embd, n_head=n_head) for _ in range(n_layer)]) 
+        self.block = nn.Sequential(*[Block(n_embd, n_head=n_head) for _ in range(n_layer)]) 
         self.ln_f = nn.LayerNorm(n_embd) # final layer normalisation
         self.lm_head = nn.Linear(n_embd, vocab_size)
 
