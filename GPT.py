@@ -81,7 +81,7 @@ class Head(nn.Module):
         q = self.query(x) # (B,T,C)
         v = self.value(x) # (B,T,C)
 
-        wei = q @ k.transpose(-2, -1) * C**-0.5 # (B,T,C) @ (B,C,T) -> (B,T,T)
+        wei = q @ k.transpose(-2, -1) * C**-0.5 # (B,T,C) @ (B,C,T) -> (B,T,T) and using scaled attention
         wei = wei.masked_fill(self.tril[:T,:T] == 0, float('-inf')) # zero out the upper triangular part
         wei = F.softmax(wei, dim=-1) # (B,T,T)
         wei = self.dropout(wei) # apply dropout to the attention weights
