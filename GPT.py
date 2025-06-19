@@ -94,8 +94,8 @@ class MultiHeadAttention(nn.Module):
     
     def __init__(self, num_heads, head_size):
         super().__init__()
-        self.heads = nn.ModuleList([Head(head_size) for _ in range(num_heads)])
-        self.proj = nn.Linear(n_embd, n_embd)
+        self.heads = nn.ModuleList([Head(head_size) for _ in range(num_heads)]) # Creates multiple attention heads
+        self.proj = nn.Linear(n_embd, n_embd) 
         self.dropout = nn.Dropout(dropout)
         
     def forward(self, x):
@@ -111,7 +111,7 @@ class FeedForward(nn.Module):
         self.net = nn.Sequential(
             nn.Linear(n_embd, 4 * n_embd), # first linear layer
             nn.ReLU(), # activation function
-            nn.Linear(4 * n_embd, n_embd),
+            nn.Linear(4 * n_embd, n_embd), # input and output sizes match
             nn.Dropout(dropout),
         )
         
